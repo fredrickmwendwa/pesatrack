@@ -1,0 +1,24 @@
+{% extends 'base.html' %} {% block content %}
+<h1>Dashboard</h1>
+<p>Income this month: {{ total_income }}</p>
+<p>Expenses this month: {{ total_expenses }}</p>
+<p>Net: {{ net }}</p>
+
+<h2>Spending by Category</h2>
+<table>
+  <tr>
+    <th>Category</th>
+    <th>Spent</th>
+    <th>Budget</th>
+    <th>Status</th>
+  </tr>
+  {% for row in category_breakdown %}
+  <tr {% if row.over_budget %}style="background-color: #fdd;" {% endif %}>
+    <td>{{ row.category.name }}</td>
+    <td>{{ row.spent }}</td>
+    <td>{{ row.limit|default:"No budget set" }}</td>
+    <td>{% if row.over_budget %}Over budget!{% else %}OK{% endif %}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}
